@@ -55,6 +55,8 @@
 
 #include "net/uipopt.h"
 
+#include "sys/cc.h"
+
 /**
  * Representation of an IP address.
  *
@@ -62,12 +64,12 @@
 typedef union uip_ip4addr_t {
   uint8_t  u8[4];			/* Initializer, must come first. */
   uint16_t u16[2];
-} __attribute__((may_alias)) uip_ip4addr_t;
+} CC_ATTRIBUTE_MAY_ALIAS uip_ip4addr_t;
 
 typedef union uip_ip6addr_t {
   uint8_t  u8[16];			/* Initializer, must come first. */
   uint16_t u16[8];
-} __attribute__((may_alias)) uip_ip6addr_t;
+} CC_ATTRIBUTE_MAY_ALIAS uip_ip6addr_t;
 
 #if UIP_CONF_IPV6
 typedef uip_ip6addr_t uip_ipaddr_t;
@@ -1603,7 +1605,7 @@ struct uip_tcpip_hdr {
   uint16_t tcpchksum;
   uint8_t urgp[2];
   uint8_t optdata[4];
-} __attribute__((may_alias));
+} CC_ATTRIBUTE_MAY_ALIAS;
 
 /* The ICMP and IP headers. */
 struct uip_icmpip_hdr {
@@ -1635,7 +1637,7 @@ struct uip_icmpip_hdr {
   uint16_t id, seqno;
   uint8_t payload[1];
 #endif /* !UIP_CONF_IPV6 */
-} __attribute__((may_alias));
+} CC_ATTRIBUTE_MAY_ALIAS;
 
 
 /* The UDP and IP headers. */
@@ -1666,7 +1668,7 @@ struct uip_udpip_hdr {
     destport;
   uint16_t udplen;
   uint16_t udpchksum;
-} __attribute__((may_alias));
+} CC_ATTRIBUTE_MAY_ALIAS;
 
 /*
  * In IPv6 the length of the L3 headers before the transport header is
@@ -1695,7 +1697,7 @@ struct uip_ip_hdr {
   uint16_t ipchksum;
   uip_ipaddr_t srcipaddr, destipaddr;
 #endif /* UIP_CONF_IPV6 */
-};
+} CC_ATTRIBUTE_MAY_ALIAS;
 
 
 /*

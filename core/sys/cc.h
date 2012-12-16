@@ -136,4 +136,42 @@
  */
 #define CC_CONCAT(s1, s2) CC_CONCAT2(s1, s2)
 
+/**
+ * Configure if the C compiler cares about C99 aliasing rules and
+ * has a construct to inform about type aliasing violations.
+ *
+ * Note that newer C compilers such as GCC 4.4 upwards and LLVM/clang
+ * use C99 type aliasing information when doing aggressive optimisation.
+ * Parts of the uIP code do not follow the C99 type aliasing rules,
+ * potentially allowing the aliasing-optimising compilers to optimise
+ * away code that is intended to be executed.  For gcc, use the
+ * __attribute__((may_alias)).  For LLVM, XXX
+ *
+ * For more information, see e.g. this blog post:
+ * http://blog.worldofcoding.com/2010/02/solving-gcc-44-strict-aliasing-problems.html
+ */
+#ifdef CC_CONF_ATTRIBUTE_MAY_ALIAS
+#define CC_ATTRIBUTE_MAY_ALIAS CC_CONF_ATTRIBUTE_MAY_ALIAS
+#else
+#ifdef __GNUC__
+#define CC_ATTRIBUTE_MAY_ALIAS __attribute__((may_alias))
+#else
+#define CC_ATTRIBUTE_MAY_ALIAS
+#endif
+#endif
+
+/**
+ * Configure if the C compiler cares about unused parameters and
+ * variables.
+ */
+#ifdef CC_CONF_ATTRIBUTE_UNUSED
+#define CC_ATTRIBUTE_UNUSED CC_CONF_ATTRIBUTE_UNUSED
+#else
+#ifdef __GNUC__
+#define CC_ATTRIBUTE_UNUSED __attribute__((unused))
+#else
+#define CC_ATTRIBUTE_UNUSED
+#endif
+#endif
+
 #endif /* __CC_H__ */

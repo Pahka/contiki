@@ -63,7 +63,7 @@ enum PACKET_TYPE {
 };
 /* get protocol level packet type   */
 /* this is not 802.15.4 packet type */
-ptype_t get_packet_type(packet_t * p __attribute__((unused))) {
+ptype_t get_packet_type(packet_t * p CC_ATTRIBUTE_UNUSED) {
 	return MAX_PACKET_TYPE;
 }
 
@@ -91,7 +91,7 @@ void build_session_req(volatile packet_t *p) {
 	return;
 }
 
-void session_req(uint16_t addr __attribute__((unused))) { 	
+void session_req(uint16_t addr CC_ATTRIBUTE_UNUSED) {
 	static volatile int time = 0;
 	volatile packet_t *p;
 
